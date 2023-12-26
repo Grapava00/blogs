@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import logoRedberry from "../assets/logo.png";
 import arrow from "../assets/Arrow.svg";
 import fileIcon from "../assets/file-icon.svg";
@@ -19,7 +20,9 @@ function AddBlogPage() {
   return (
     <div>
       <header className='center-redberry'>
-        <img src={logoRedberry} alt='redberry logo' className='logo' />
+        <Link to='/'>
+          <img src={logoRedberry} alt='redberry logo' className='logo' />
+        </Link>
       </header>
       <img src={arrow} alt='go back arrow' className='go-back-arrow' />
       <form onSubmit={handleSubmit} className='blog-form'>

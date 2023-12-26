@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import cover from ".././assets/cover.png";
 import blogCover from ".././assets/blog-cover.png";
 import showFullBlogIcon from ".././assets/show-full-blog.svg";
@@ -8,7 +8,7 @@ import "./homepage.css";
 function HomePage() {
   return (
     <>
-      <Header />
+      <Header content={"შესვლა"} />
       <main className='container'>
         <div className='cover'>
           <h1>ბლოგი</h1>
