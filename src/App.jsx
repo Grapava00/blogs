@@ -1,17 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { nav } from "./navigation";
+import Home from "./pages/Home";
+import Create from "./pages/Create";
+import Blog from "./pages/Blog";
 
 const App = () => {
   return (
     <Routes>
-      {nav.map((route, index) => (
-        <Route
-          key={index}
-          path={route.path}
-          element={route.isPrivate ? route.element : null}
-        />
-      ))}
+      <Route path='/' element={<Home />} />
+      <Route path='/create-blog' element={<Create />} />
+      <Route path='/blog' element={<Blog />} />
     </Routes>
   );
 };

@@ -1,6 +1,6 @@
-import { Home } from "./pages/Home";
-import { Create } from "./pages/Create";
-import { Blog } from "./pages/Blog";
+import Home from "./pages/Home";
+import Create from "./pages/Create";
+import Blog from "./pages/Blog";
 
 export const nav = [
   {
