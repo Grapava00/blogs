@@ -156,3 +156,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 288px;
   cursor: pointer;
 }
+
+.error {
+  color: red;
+}
+
+.correct {
+  color: green;
+}
+
+.gray {
+  color: gray;
+}

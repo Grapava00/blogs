@@ -1,19 +1,18 @@
 import React from "react";
-import { Routes, Route, Outlet } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import BlogPage from "./pages/BlogPage";
-import AddBlogPage from "./pages/AddBlogPage";
-// import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import { nav } from "./navigation";
 
 const App = () => {
   return (
-    <>
-      <Routes>
-        <Route index element={<HomePage />} />
-        <Route path='blog' element={<BlogPage />} />
-        <Route path='addblog' element={<AddBlogPage />} />
-      </Routes>
-    </>
+    <Routes>
+      {nav.map((route, index) => (
+        <Route
+          key={index}
+          path={route.path}
+          element={route.isPrivate ? route.element : null}
+        />
+      ))}
+    </Routes>
   );
 };
 

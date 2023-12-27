@@ -1,17 +1,33 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import logoRedberry from "../assets/logo.png";
 import arrow from "../assets/Arrow.svg";
 import fileIcon from "../assets/file-icon.svg";
-import "./addblogpage.css";
+import "./create.css";
 
-function AddBlogPage() {
+function Create() {
   const [file, setFile] = useState();
+
   function handleChange(e) {
     setFile(URL.createObjectURL(e.target.files[0]));
   }
 
-  const handleSubmit = (e) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    criteriaMode: "all",
+  });
+
+  const customWordCountValidation = (value) => {
+    const words = value.split(" ").filter((word) => word.trim() !== ""); // Split by spaces and remove empty strings
+    return words.length >= 2;
+  };
+
+  console.log(errors);
+  const onSubmit = (e) => {
     e.preventDefault();
 
     alert("Submitted");
@@ -25,7 +41,7 @@ function AddBlogPage() {
         </Link>
       </header>
       <img src={arrow} alt='go back arrow' className='go-back-arrow' />
-      <form onSubmit={handleSubmit} className='blog-form'>
+      <form onSubmit={handleSubmit(onSubmit)} className='blog-form'>
         <h2 className='title'>ბლოგის დამატება</h2>
         <div className='main-form-content'>
           <div className='file-upload-container'>
@@ -35,13 +51,28 @@ function AddBlogPage() {
               <p className='file-upload-text'>
                 ჩააგდეთ ფაილი აქ ან <span>აირჩიეთ ფაილი</span>
               </p>
-              <input type='file' id='image' onChange={handleChange}></input>
+              <input
+                {...register("file", {
+                  required: true,
+                })}
+                type='file'
+                id='image'
+                onChange={handleChange}
+              ></input>
             </label>
           </div>
           <div className='blog-title-author-container'>
             <div className='blog-author-container'>
               <p>ავტორი *</p>
-              <input placeholder='შეიყვანეთ სახელი' />
+              <input
+                {...register("author", {
+                  required: true,
+                  validate: customWordCountValidation,
+                  minLength: 4,
+                  pattern: /^[ა-ჰ]+$/,
+                })}
+                placeholder='შეიყვანეთ სახელი'
+              />
               <ul className='requirements-list'>
                 <li>მინიმუმ 4 სიმბოლო</li>
                 <li>მინიმუმ ორი სიტყვა</li>
@@ -88,7 +119,7 @@ function AddBlogPage() {
             <input placeholder='Example@redberry.ge' />
           </div>
           <div className='publish-container'>
-            <button className='publish'>გამოქვეყნება</button>
+            <input type='submit' className='publish' value='გამოქვეყნება' />
           </div>
         </div>
       </form>
@@ -96,4 +127,4 @@ function AddBlogPage() {
   );
 }
 
-export default AddBlogPage;
+export default Create;
