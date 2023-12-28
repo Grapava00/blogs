@@ -5,6 +5,7 @@ import logoRedberry from "../assets/logo.png";
 import arrow from "../assets/Arrow.svg";
 import File from "../components/File";
 import Input from "../components/Input";
+import Textarea from "../components/Textarea";
 import "./create.css";
 
 function Create() {
@@ -53,19 +54,14 @@ function Create() {
               placeholder='შეიყვანეთ სახელი'
             />
           </div>
-          <div>
-            <label htmlFor='blog' className='textarea-title'>
-              აღწერა *
-            </label>
-            <textarea
-              placeholder='შეიყვნეთ აღწერა'
-              id='blog'
-              name='blog'
-              rows='5'
-              cols='33'
-            ></textarea>
-            <p className='blog-content-requirement'>მინიმუმ 2 სიმბოლო</p>
-          </div>
+          <Textarea
+            title='აღწერა *'
+            placeholder='შეიყვნეთ აღწერა'
+            id='blog'
+            name='blog'
+            rows='5'
+            cols='33'
+          />
           <div className='blog-title-author-container'>
             <div className='blog-author-container'>
               <p>გამოქვეყნების თარიღი *</p>

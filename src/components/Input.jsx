@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import PropTypes from "prop-types";
 import "./input.css";
 
 function Input({
@@ -15,12 +16,18 @@ function Input({
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
+
+  const inputValue = watch(`${name}`);
+
+  console.log(inputValue);
 
   return (
     <>
       <div className='input-container'>
         <p className='input-title'>{title}</p>
+
         <input
           {...register(`${name}`, {
             required: { required },
@@ -45,5 +52,15 @@ function Input({
     </>
   );
 }
+
+Input.propTypes = {
+  title: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  required: PropTypes.bool,
+  customWordCountValidation: PropTypes.func,
+  minLength: PropTypes.number,
+  pattern: PropTypes.instanceOf(RegExp),
+  placeholder: PropTypes.string,
+};
 
 export default Input;
