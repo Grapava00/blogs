@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import logoRedberry from "../assets/logo.png";
 import arrow from "../assets/Arrow.svg";
-import fileIcon from "../assets/file-icon.svg";
+import File from "../components/File";
+import Input from "../components/Input";
 import "./create.css";
 
 function Create() {
@@ -11,27 +12,20 @@ function Create() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    criteriaMode: "all",
-  });
+  } = useForm();
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const onSubmit = (data) => {
+    console.log(data.file[0]);
+  };
 
   const customWordCountValidation = (value) => {
     const words = value.split(" ").filter((word) => word.trim() !== ""); // Split by spaces and remove empty strings
     return words.length >= 2;
   };
 
-  const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append("file", data.files[0]); // If file is needed
-    formData.append("author", data.author);
-
-    console.log(formData);
-
-    alert("Submitted");
-  };
-
   return (
-    <div>
+    <div className='create-blog-container'>
       <header className='center-redberry'>
         <Link to='/'>
           <img src={logoRedberry} alt='redberry logo' className='logo' />
@@ -43,45 +37,21 @@ function Create() {
       <form onSubmit={handleSubmit(onSubmit)} className='blog-form'>
         <h2 className='title'>ბლოგის დამატება</h2>
         <div className='main-form-content'>
-          <div className='file-upload-container'>
-            <h3 className='file-upload-heading'>ატვირთეთ ფოტო</h3>
-            <label htmlFor='image' className='file-upload'>
-              <img src={fileIcon} />
-              <p className='file-upload-text'>
-                ჩააგდეთ ფაილი აქ ან <span>აირჩიეთ ფაილი</span>
-              </p>
-              <input
-                {...register("file", {
-                  required: true,
-                })}
-                type='file'
-                id='image'
-              ></input>
-            </label>
-          </div>
+          <File />
           <div className='blog-title-author-container'>
-            <div className='blog-author-container'>
-              <p>ავტორი *</p>
-              <input
-                {...register("author", {
-                  required: true,
-                  validate: customWordCountValidation,
-                  minLength: 4,
-                  pattern: /^[ა-ჰ]+$/,
-                })}
-                placeholder='შეიყვანეთ სახელი'
-              />
-              <ul className='requirements-list'>
-                <li>მინიმუმ 4 სიმბოლო</li>
-                <li>მინიმუმ ორი სიტყვა</li>
-                <li>მხოლოდ ქართული სიმბოლოები</li>
-              </ul>
-            </div>
-            <div className='blog-title-container'>
-              <p className='blog-title'>სათური *</p>
-              <input placeholder='შეიყვანეთ სათაური' />
-              <p className='blog-title-requirement'>მინიმუმ 4 სიმბოლო</p>
-            </div>
+            <Input
+              pattern={/^[ა-ჰ]+$/}
+              title='ავტორი *'
+              name='author'
+              customWordCountValidation={customWordCountValidation}
+              minLength={4}
+              placeholder='შეიყვანეთ სათაური'
+            />
+            <Input
+              title='სათაური *'
+              minLength={4}
+              placeholder='შეიყვანეთ სახელი'
+            />
           </div>
           <div>
             <label htmlFor='blog' className='textarea-title'>

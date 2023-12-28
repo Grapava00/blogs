@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Create from "./pages/Create";
 import Blog from "./pages/Blog";
+import Input from "./components/Input";
 import { UseAppData } from "./context/ContextProvider";
 const App = () => {
   const { authenticated } = UseAppData();
@@ -15,6 +16,7 @@ const App = () => {
         "You "
       )}
       <Route path='/blog' element={<Blog />} />
+      <Route path='/input' element={<Input />} />
     </Routes>
   );
 };

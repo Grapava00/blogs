@@ -1,0 +1,36 @@
+input[type="file"] {
+  display: none;
+}
+.file-upload {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  border-radius: 12px;
+  border: 1px dashed #85858d;
+  background: #f4f3ff;
+  height: 180px;
+  cursor: pointer;
+}
+
+.file-upload-heading {
+  color: #1a1a1f;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.file-upload-text {
+  color: #1a1a1f;
+  font-weight: 400;
+}
+
+.preview-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background: #f2f2fa;
+}

@@ -9,12 +9,6 @@ export function ContextProvider({ children }) {
     JSON.parse(localStorage.getItem("authenticated")) || false;
   const [authenticated, setAuthenticated] = useState(initialAuthenticated);
 
-  // Save data to localStorage
-
-  // Retrieve data from localStorage
-  const retrievedText = localStorage.getItem("myText");
-  console.log(retrievedText); // This will log 'yes' to the console
-
   const token =
     "d843f82fa4b7c67fcafa5d878f862da170d9d93c1d09e6b8a8f6183a44b56289";
 
