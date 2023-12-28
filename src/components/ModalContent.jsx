@@ -1,59 +1,24 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import close from "../assets/close.svg";
 import "./modalcontent.css";
 import errorIcon from "../assets/error-icon.svg";
 import successIcon from "../assets/success-icon.svg";
+import { UseAppData } from "../context/ContextProvider";
+
 export default function ModalContent({ onClose }) {
+  const { login, authenticated } = UseAppData();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [success, setSuccess] = useState(false);
 
   const onSubmit = async (data) => {
     console.log(data);
-    const token =
-      "d843f82fa4b7c67fcafa5d878f862da170d9d93c1d09e6b8a8f6183a44b56289";
-
-    // const response = await axios.get(
-    //   "https://api.blog.redberryinternship.ge/api/blogs",
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   }
-    // );
-
-    // console.log(response);
-
-    const response = await axios.post(
-      "https://api.blog.redberryinternship.ge/api/login",
-      {
-        email: data.email,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    if (response.status === 204) {
-      setSuccess(true);
-    }
+    await login(data.email);
   };
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, []);
 
   return (
     <div className='modal'>
@@ -61,7 +26,7 @@ export default function ModalContent({ onClose }) {
         <img onClick={onClose} src={close} className='close-button' />
 
         <div>
-          {!success ? (
+          {!authenticated ? (
             <>
               <h3 className='modal-heading'>შესვლა</h3>
               <p className='email-title'>ელ-ფოსტა</p>
@@ -87,7 +52,9 @@ export default function ModalContent({ onClose }) {
                     <p className='error-message'>{errors.email.message}</p>
                   </div>
                 )}
-                <button className='enter-button'>შესვლა</button>
+                <button className='enter-button' type='submit'>
+                  შესვლა
+                </button>
               </form>
             </>
           ) : (
