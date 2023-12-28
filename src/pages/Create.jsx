@@ -7,12 +7,6 @@ import fileIcon from "../assets/file-icon.svg";
 import "./create.css";
 
 function Create() {
-  const [file, setFile] = useState();
-
-  function handleChange(e) {
-    setFile(URL.createObjectURL(e.target.files[0]));
-  }
-
   const {
     register,
     handleSubmit,
@@ -26,9 +20,12 @@ function Create() {
     return words.length >= 2;
   };
 
-  console.log(errors);
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("file", data.files[0]); // If file is needed
+    formData.append("author", data.author);
+
+    console.log(formData);
 
     alert("Submitted");
   };
@@ -40,7 +37,9 @@ function Create() {
           <img src={logoRedberry} alt='redberry logo' className='logo' />
         </Link>
       </header>
-      <Link to='/'><img src={arrow} alt='go back arrow' className='go-back-arrow' /></Link>
+      <Link to='/'>
+        <img src={arrow} alt='go back arrow' className='go-back-arrow' />
+      </Link>
       <form onSubmit={handleSubmit(onSubmit)} className='blog-form'>
         <h2 className='title'>ბლოგის დამატება</h2>
         <div className='main-form-content'>
@@ -57,7 +56,6 @@ function Create() {
                 })}
                 type='file'
                 id='image'
-                onChange={handleChange}
               ></input>
             </label>
           </div>

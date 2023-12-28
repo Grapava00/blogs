@@ -5,7 +5,16 @@ const AppDataContext = createContext();
 export const UseAppData = () => useContext(AppDataContext);
 
 export function ContextProvider({ children }) {
-  const [authenticated, setAuthenticated] = useState(false);
+  const initialAuthenticated =
+    JSON.parse(localStorage.getItem("authenticated")) || false;
+  const [authenticated, setAuthenticated] = useState(initialAuthenticated);
+
+  // Save data to localStorage
+
+  // Retrieve data from localStorage
+  const retrievedText = localStorage.getItem("myText");
+  console.log(retrievedText); // This will log 'yes' to the console
+
   const token =
     "d843f82fa4b7c67fcafa5d878f862da170d9d93c1d09e6b8a8f6183a44b56289";
 
@@ -26,6 +35,7 @@ export function ContextProvider({ children }) {
 
       if (response.status === 204) {
         setAuthenticated(true);
+        localStorage.setItem("authenticated", JSON.stringify(true));
       }
     } catch (error) {
       // Handle login error
