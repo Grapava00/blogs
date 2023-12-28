@@ -40,7 +40,7 @@ function Create() {
           <img src={logoRedberry} alt='redberry logo' className='logo' />
         </Link>
       </header>
-      <img src={arrow} alt='go back arrow' className='go-back-arrow' />
+      <Link to='/'><img src={arrow} alt='go back arrow' className='go-back-arrow' /></Link>
       <form onSubmit={handleSubmit(onSubmit)} className='blog-form'>
         <h2 className='title'>ბლოგის დამატება</h2>
         <div className='main-form-content'>

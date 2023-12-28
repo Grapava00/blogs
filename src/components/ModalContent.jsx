@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import close from "../assets/close.svg";
 import "./modalcontent.css";
@@ -16,7 +16,6 @@ export default function ModalContent({ onClose }) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     await login(data.email);
   };
 
