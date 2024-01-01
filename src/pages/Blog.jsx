@@ -14,6 +14,7 @@ function Blog() {
   const [goNextArrow, setGoNextArrow] = useState(true);
   const [goPrevArrow, setGoPrevArrow] = useState(false);
 
+ 
   const { blog, fetchedData, openBlog } = UseAppData();
 
   const passId = async (id) => {
@@ -36,7 +37,7 @@ function Blog() {
   function goNext() {
     setCurrentIndex((oldIndex) => {
       let newIndex = oldIndex + 1;
-      if (newIndex > filteredData.length - 5) {
+      if (newIndex >= filteredData.length - newIndex) {
         newIndex = oldIndex;
         setGoNextArrow(false);
         setGoPrevArrow(true);
@@ -51,7 +52,7 @@ function Blog() {
   function goPrev() {
     setCurrentIndex((oldIndex) => {
       let newIndex = oldIndex - 1;
-      if (newIndex < 1) {
+      if (newIndex < 0) {
         newIndex = oldIndex;
         setGoPrevArrow(false);
         setGoNextArrow(true);
@@ -107,6 +108,7 @@ function Blog() {
           <div>
             <svg
               onClick={goPrev}
+              style={{ marginRight: "24px", cursor: "pointer" }}
               xmlns='http://www.w3.org/2000/svg'
               width='44'
               height='44'
@@ -124,20 +126,10 @@ function Blog() {
                 fill='#F3F2FA'
               />
             </svg>
-            {/* <img
-              onClick={goPrev}
-              className={`margin-right-24 ${goPrevArrow} `}
-              src={arrowGray}
-              alt='move another article arrow'
-            /> */}
-            {/* <img
-              onClick={goNext}
-              className={goNextArrow}
-              src={arrowBlue}
-              alt='move another article arrow'
-            /> */}
+
             <svg
               onClick={goNext}
+              style={{ cursor: "pointer" }}
               xmlns='http://www.w3.org/2000/svg'
               width='44'
               height='44'
