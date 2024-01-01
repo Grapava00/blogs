@@ -21,10 +21,6 @@ export function ContextProvider({ children }) {
     "cb90f018dbc5cf4f85e3209a37d2f9df1a2cfb530cc5c15f9bfae50300ca5550";
 
   async function sendFileToServer(formData) {
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}:${value}`);
-      console.log(typeof value);
-    }
     const uploadUrl = "https://api.blog.redberryinternship.ge/api/blogs";
 
     const uploadResponse = await axios.post(uploadUrl, formData, {
@@ -55,7 +51,6 @@ export function ContextProvider({ children }) {
         "fetchedData",
         JSON.stringify(fetchDataResponse.data)
       );
-      // console.log("Fetched data:", fetchDataResponse.data);
     } catch (error) {
       // Handle error
       console.error("Failed to fetch data:", error);

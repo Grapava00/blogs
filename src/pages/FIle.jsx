@@ -23,9 +23,6 @@ function FIle() {
       });
 
       if (uploadResponse.ok) {
-        console.log("File uploaded successfully");
-
-        // Add a delay of 2 seconds
         setTimeout(async () => {
           const displayResponse = await fetch(uploadUrl, {
             method: "GET",

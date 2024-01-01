@@ -50,7 +50,7 @@ function Create() {
       event.target.selectedOptions,
       (option) => option.id
     );
-    console.log(selectedCategories);
+
     setSelectedOptions(selectedCategories);
   };
 
