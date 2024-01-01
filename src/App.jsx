@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 // import Create from "./pages/Create";
 import Blog from "./pages/Blog";
 import Create from "./pages/Create";
+import File from "./pages/FIle";
 
 import { UseAppData } from "./context/ContextProvider";
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
         "You "
       )}
       <Route path='/blog' element={<Blog />} />
+      <Route path='/file' element={<File />} />
     </Routes>
   );
 };

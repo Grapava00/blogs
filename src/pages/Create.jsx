@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Select from "react-select";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -8,28 +9,54 @@ import successIcon from "../assets/success-icon.svg";
 import closeIcon from "../assets/close.svg";
 import logoRedberry from "../assets/logo.png";
 import arrow from "../assets/Arrow.svg";
+import { UseAppData } from "../context/ContextProvider";
 import "./create.css";
 
 function Create() {
   const [showModal, setShowModal] = useState(false);
+  const [selectedFile, setSelectedFile] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
   const { register, control, handleSubmit, formState, watch } = useForm({
     defaultValues: {
       author: "",
       title: "",
       textarea: "",
-      date: "",
+      publish_date: "",
       email: "",
+      categories: "",
     },
   });
+
   const { errors, isDirty, isValid, isSubmitSuccessful } = formState;
 
-  const onSubmit = (data) => {
-    console.log("form submitted", data);
+  const { sendFileToServer, categories } = UseAppData();
+
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("author", data.author);
+    formData.append("email", data.email);
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("publish_date", data.publish_date);
+    formData.append("image", selectedFile);
+    formData.append("categories", JSON.stringify(selectedOptions));
+
+    await sendFileToServer(formData);
+  };
+
+  const handleSelect = (event) => {
+    const selectedCategories = Array.from(
+      event.target.selectedOptions,
+      (option) => option.id
+    );
+    console.log(selectedCategories);
+    setSelectedOptions(selectedCategories);
   };
 
   const authorValue = watch("author") ?? "";
   const titleValue = watch("title") ?? "";
-  const textAreaValue = watch("textarea") ?? "";
+  const textAreaValue = watch("description") ?? "";
 
   const wordsValidate = () => {
     if (authorValue.split(" ").length >= 2) {
@@ -135,6 +162,12 @@ function Create() {
   const moveHomePage = () => {
     setShowModal(false);
   };
+
+  function handleFileChange(event) {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  }
+
   return (
     <div className='create-blog-container'>
       <header className='center-redberry'>
@@ -151,6 +184,26 @@ function Create() {
         noValidate
       >
         <h2 className='create-blog-form--title'>ბლოგის დამატება</h2>
+
+        <select name='categories' onChange={handleSelect}>
+          {categories.map((category) => (
+            <option
+              id={category.id}
+              key={category.title}
+              value={category.title}
+              style={{
+                background: category.background_color,
+                color: category.text_color,
+              }}
+            >
+              {category.title}
+            </option>
+          ))}
+        </select>
+
+        <div>
+          <input name='image' type='file' onChange={handleFileChange} />
+        </div>
         {/* enter author name */}
         <div className='create-blog-form--inputs-container'>
           <div className='create-blog-form--wrap-inputs'>
@@ -213,7 +266,7 @@ function Create() {
               placeholder='შეიყვნეთ აღწერა'
               rows='5'
               cols='33'
-              {...register("textarea", { required: true, minLength: 2 })}
+              {...register("description", { required: true, minLength: 2 })}
             ></textarea>
             {/* validation warning */}
             <p className='create-blog-form--inputs-warning'>
@@ -232,7 +285,7 @@ function Create() {
               className='create-blog-form--input '
               type='date'
               id='date'
-              {...register("date", { valueAsDate: true, required: true })}
+              {...register("publish_date", { required: true })}
             />
           </div>
 

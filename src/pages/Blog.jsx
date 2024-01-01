@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import arrow from "../assets/Arrow.svg";
 import arrowGray from "../assets/Arrow-gray.svg";
@@ -6,65 +6,66 @@ import arrowBlue from "../assets/Arrow-blue.svg";
 import blogCover from "../assets/blog-cover.png";
 import showFullBlogIcon from "../assets/show-full-blog.svg";
 import { Link } from "react-router-dom";
+import { UseAppData } from "../context/ContextProvider";
 import "./blog.css";
 
 function Blog() {
+  const [filteredData, setFilteredData] = useState([]) || "";
+
+  const { blog, fetchedData, openBlog } = UseAppData();
+
+  const passId = async (id) => {
+    await openBlog(id);
+  };
+
+  useEffect(() => {
+    if (fetchedData) {
+      const filteredBlogs = fetchedData.data.filter((data) => {
+        return data.categories.some((category) =>
+          blog.categories.some(
+            (blogCategory) => blogCategory.title === category.title
+          )
+        );
+      });
+      setFilteredData(filteredBlogs);
+    }
+  }, [blog]);
+
   return (
     <>
       <Header content={"შესვლა"} />
-      <img src={arrow} alt='go back arrow' className='go-back-arrow' />
+      <Link to='/'>
+        <img src={arrow} alt='go back arrow' className='go-back-arrow' />
+      </Link>
       <div className='blogs-container'>
         <article className='blog-container-main'>
           <img
-            src={blogCover}
+            src={blog.image}
             alt='Blog Cover'
             className='blog-cover blog-cover-large'
           />
           <div className='grid-container'>
-            <h3>ნია გოგსაძე</h3>
-            <time dateTime='2023-11-02'>
-              02.11.2023 • lile.kvaratskhelia@redberry.ge
+            <h3>{blog.author}</h3>
+            <time dateTime={blog.publish_date}>
+              {blog.publish_date} {`• ${blog.email}`}
             </time>
-            <h2 className='h2-large'>
-              EOMM-ის მრჩეველთა საბჭოს ნინო ეგაძე შეუერთდა
-            </h2>
+            <h2 className='h2-large'>{blog.title}</h2>
             <ul className='flex-container'>
-              <li className='category' data-item-type='accent-1'>
-                მარკეტი
-              </li>
-              <li className='category' data-item-type='accent-2'>
-                აპლიკაცია
-              </li>
-              <li className='category' data-item-type='accent-3'>
-                ხელოვნური ინტელექტი
-              </li>
+              {blog.categories &&
+                blog.categories.map((category) => (
+                  <li
+                    className='category'
+                    style={{
+                      color: category.text_color,
+                      background: category.background_color,
+                    }}
+                    key={category.title}
+                  >
+                    {category.title}
+                  </li>
+                ))}
             </ul>
-            <p className='content'>
-              6 თვის შემდეგ ყველის ბრმა დეგუსტაციის დროც დადგა. მაქსიმალური
-              სიზუსტისთვის, ეს პროცესი ორჯერ გაიმეორეს და ორივეჯერ იმ ყველს
-              მიენიჭა უპირატესობა, რომელსაც ჰიპ-ჰოპს ასმენინებდნენ. „მუსიკალური
-              ენერგია პირდაპირ ყველის შუაგულში რეზონირებდა“, — აღნიშნა ბერნის
-              ხელოვნების უნივერსიტეტის წარმომადგენელმა, მაიკლ ჰერენბერგმა. რა
-              თქმა უნდა, ეს ერთი კვლევა საკმარისი არ არის საბოლოო დასკვნების
-              გამოსატანად. სანაცვლოდ, მეცნიერებს სურთ, უშუალოდ ჰიპ-ჰოპის ჟანრის
-              სხვადასხვა მუსიკა მოასმენინონ რამდენიმე ყველს და უკვე ისინი
-              შეაჯიბრონ ერთმანეთს. აქვე საგულისხმოა, რომ როგორც ბერნის
-              მეცნიერები განმარტავენ, ექსპერიმენტს საფუძვლად არა ყველის
-              გაუმჯობესებული წარმოება, არამედ კულტურული საკითხები დაედო. მათი
-              თქმით, ადამიანებს უყვართ ყველი და მუსიკა, ამიტომაც საინტერესოა ამ
-              ორის კავშირის დანახვა.
-            </p>
-            <p>
-              6 თვის შემდეგ ყველის ბრმა დეგუსტაციის დროც დადგა. მაქსიმალური
-              სიზუსტისთვის, ეს პროცესი ორჯერ გაიმეორეს და ორივეჯერ იმ ყველს
-              მიენიჭა უპირატესობა, რომელსაც ჰიპ-ჰოპს ასმენინებდნენ. „მუსიკალური
-              ენერგია პირდაპირ ყველის შუაგულში რეზონირებდა“, — აღნიშნა ბერნის
-              ხელოვნების უნივერსიტეტის წარმომადგენელმა, მაიკლ ჰერენბერგმა. რა
-              თქმა უნდა, ეს ერთი კვლევა საკმარისი არ არის საბოლოო დასკვნების
-              გამოსატანად. სანაცვლოდ, მეცნიერებს სურთ, უშუალოდ ჰიპ-ჰოპის ჟანრის
-              სხვადასხვა მუსიკა მოასმენინონ რამდენიმე ყველს და უკვე ისინი
-              შეაჯიბრონ ერთმანეთს.
-            </p>
+            <p className='content'>{blog.description}</p>
           </div>
         </article>
       </div>
@@ -81,33 +82,37 @@ function Blog() {
           </div>
         </div>
         <div className='related-articles-list'>
-          <article className='blog'>
-            <img src={blogCover} alt='Blog Cover' className='blog-cover' />
-            <div className='grid-container'>
-              <h3>ნია გოგსაძე</h3>
-              <time dateTime='2023-11-02'>02.11.2023</time>
-              <h2>EOMM-ის მრჩეველთა საბჭოს ნინო ეგაძე შეუერთდა</h2>
-              <ul className='flex-container'>
-                <li className='category' data-item-type='accent-1'>
-                  მარკეტი
-                </li>
-                <li className='category' data-item-type='accent-2'>
-                  აპლიკაცია
-                </li>
-                <li className='category' data-item-type='accent-3'>
-                  ხელოვნური ინტელექტი
-                </li>
-              </ul>
-              <p className='description'>
-                6 თვის შემდეგ ყველის ბრმა დეგუსტაციის დროც დადგა. მაქსიმალური
-                სიზუსტისთვის, ეს პროცესი...
-              </p>
-              <Link to='/blog'>
-                სრულად ნახვა
-                <img src={showFullBlogIcon} alt='show full blog icon' />
-              </Link>
-            </div>
-          </article>
+          {filteredData.map((data) => {
+            return (
+              <article className='blog' key={data.id}>
+                <img src={data.image} alt='Blog Cover' className='blog-cover' />
+                <div className='grid-container'>
+                  <h3>{data.author}</h3>
+                  <time dateTime={data.publish_date}>{data.publish_date}</time>
+                  <h2>{data.title}</h2>
+                  <ul className='flex-container'>
+                    {data.categories.map((category) => (
+                      <li
+                        className='category'
+                        style={{
+                          color: category.text_color,
+                          background: category.background_color,
+                        }}
+                        key={category.title}
+                      >
+                        {category.title}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className='description'>{data.description}</p>
+                  <Link to='/blog' onClick={() => passId(data.id)}>
+                    სრულად ნახვა
+                    <img src={showFullBlogIcon} alt='show full blog icon' />
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </>

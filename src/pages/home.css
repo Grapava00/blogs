@@ -24,6 +24,8 @@ h1 {
 .categories {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 10px;
   max-width: 684px;
   width: 100%;
   margin: 0 auto;
