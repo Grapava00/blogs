@@ -287,6 +287,15 @@ input[type="file"] {
   background: #f2f2fa;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
+/*textarea.......................................... */
+textarea {
+  resize: none;
+}
+
 /* email........................................... */
 
 .input-title {
@@ -348,4 +357,8 @@ input[type="date"] {
 .border-green {
   border: 1px solid #14d81c;
   background: #f8fff8;
+}
+
+.form-container {
+  background: #fbfaff;
 }

@@ -1,10 +1,9 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-// import Create from "./pages/Create";
 import Blog from "./pages/Blog";
 import Create from "./pages/Create";
-import File from "./pages/FIle";
+import FileInput from "./pages/File";
 
 import { UseAppData } from "./context/ContextProvider";
 const App = () => {
@@ -12,13 +11,9 @@ const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      {authenticated ? (
-        <Route path='/create-blog' element={<Create />} />
-      ) : (
-        "You "
-      )}
+      {authenticated ? <Route path='/create-blog' element={<Create />} /> : ""}
       <Route path='/blog' element={<Blog />} />
-      <Route path='/file' element={<File />} />
+      <Route path='/file' element={<FileInput />} />
     </Routes>
   );
 };

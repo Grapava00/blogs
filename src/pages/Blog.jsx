@@ -14,7 +14,6 @@ function Blog() {
   const [goNextArrow, setGoNextArrow] = useState(true);
   const [goPrevArrow, setGoPrevArrow] = useState(false);
 
- 
   const { blog, fetchedData, openBlog } = UseAppData();
 
   const passId = async (id) => {
@@ -23,7 +22,7 @@ function Blog() {
 
   useEffect(() => {
     if (fetchedData) {
-      const filteredBlogs = fetchedData.data.filter((data) => {
+      const filteredBlogs = fetchedData.data?.filter((data) => {
         return data.categories.some((category) =>
           blog.categories.some(
             (blogCategory) => blogCategory.title === category.title
