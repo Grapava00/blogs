@@ -11,9 +11,9 @@ export function ContextProvider({ children }) {
   const [authenticated, setAuthenticated] =
     useState(initialAuthenticated) || null;
   const [categories, setCategories] = useState(categoriesList);
-  const initialFetchedData =
-    JSON.parse(localStorage.getItem("fetchedData")) || "";
-  const [fetchedData, setFetchData] = useState(initialFetchedData);
+  const storedAllBlogData =
+    JSON.parse(localStorage.getItem("allBlogData")) || "";
+  const [allBlogData, setAllBlogData] = useState(storedAllBlogData);
   const initialBlog = JSON.parse(localStorage.getItem("blog")) || "";
   const [blog, setBlog] = useState(initialBlog);
 
@@ -23,19 +23,19 @@ export function ContextProvider({ children }) {
   async function sendFileToServer(formData) {
     const uploadUrl = "https://api.blog.redberryinternship.ge/api/blogs";
 
-    const uploadResponse = await axios.post(uploadUrl, formData, {
+     await axios.post(uploadUrl, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
     });
 
-    await fetchBlogs();
+    await fetchAllBlogData();
   }
 
-  const fetchBlogs = async () => {
+  const fetchAllBlogData = async () => {
     try {
-      const fetchDataResponse = await axios.get(
+      const allBlogDataResponse = await axios.get(
         "https://api.blog.redberryinternship.ge/api/blogs",
         {
           headers: {
@@ -45,15 +45,15 @@ export function ContextProvider({ children }) {
         }
       );
 
-      setFetchData(fetchDataResponse.data);
+      setAllBlogData(allBlogDataResponse.data);
 
       localStorage.setItem(
-        "fetchedData",
-        JSON.stringify(fetchDataResponse.data)
+        "allBlogData",
+        JSON.stringify(allBlogDataResponse.data)
       );
     } catch (error) {
       // Handle error
-      console.error("Failed to fetch data:", error);
+      console.error("Failed to fetch all blog data:", error);
     }
   };
 
@@ -133,7 +133,7 @@ export function ContextProvider({ children }) {
         getCategories,
         categories,
         sendFileToServer,
-        fetchedData,
+        allBlogData,
         openBlog,
         blog,
         fetchBlogs,
