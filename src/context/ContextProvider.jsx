@@ -1,21 +1,23 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 const AppDataContext = createContext();
 export const UseAppData = () => useContext(AppDataContext) || "";
 
 export function ContextProvider({ children }) {
-  const initialAuthenticated =
-    JSON.parse(localStorage.getItem("authenticated")) || false;
-  const categoriesList = JSON.parse(localStorage.getItem("categories")) || null;
-  const [authenticated, setAuthenticated] =
-    useState(initialAuthenticated) || null;
-  const [categories, setCategories] = useState(categoriesList);
+  const storedIsAuthenticated =
+    JSON.parse(localStorage.getItem("isAuthenticated")) || false;
+  const [isAuthenticated, setIsAuthenticated] = useState(storedIsAuthenticated);
+  const storedCategoriesData =
+    JSON.parse(localStorage.getItem("categoriesDataList")) || "";
+  const [categoriesData, setCategoriesData] = useState(storedCategoriesData);
   const storedAllBlogData =
     JSON.parse(localStorage.getItem("allBlogData")) || "";
   const [allBlogData, setAllBlogData] = useState(storedAllBlogData);
-  const initialBlog = JSON.parse(localStorage.getItem("blog")) || "";
-  const [blog, setBlog] = useState(initialBlog);
+  const storedSingleBlogData =
+    JSON.parse(localStorage.getItem("singleBlogData")) || "";
+  const [singleBlog, setSingleBlogData] = useState(storedSingleBlogData);
 
   const token =
     "cb90f018dbc5cf4f85e3209a37d2f9df1a2cfb530cc5c15f9bfae50300ca5550";
@@ -23,7 +25,7 @@ export function ContextProvider({ children }) {
   async function sendFileToServer(formData) {
     const uploadUrl = "https://api.blog.redberryinternship.ge/api/blogs";
 
-     await axios.post(uploadUrl, formData, {
+    await axios.post(uploadUrl, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
@@ -57,7 +59,7 @@ export function ContextProvider({ children }) {
     }
   };
 
-  const openBlog = async (id) => {
+  const fetchSingleBlogData = async (id) => {
     try {
       const response = await axios.get(
         `https://api.blog.redberryinternship.ge/api/blogs/${id}`,
@@ -68,8 +70,8 @@ export function ContextProvider({ children }) {
         }
       );
 
-      setBlog(response.data);
-      localStorage.setItem("blog", JSON.stringify(response.data));
+      setSingleBlogData(response.data);
+      localStorage.setItem("singleBlogData", JSON.stringify(response.data));
     } catch (error) {
       console.error("Error fetching blog data:", error);
     }
@@ -91,8 +93,8 @@ export function ContextProvider({ children }) {
       );
 
       if (response.status === 204) {
-        setAuthenticated(true);
-        localStorage.setItem("authenticated", JSON.stringify(true));
+        setIsAuthenticated(true);
+        localStorage.setItem("isAuthenticated", JSON.stringify(true));
       }
     } catch (error) {
       // Handle login error
@@ -113,7 +115,10 @@ export function ContextProvider({ children }) {
       );
 
       if (response.status === 200) {
-        localStorage.setItem("categories", JSON.stringify(response.data.data));
+        localStorage.setItem(
+          "categoriesDataList",
+          JSON.stringify(response.data.data)
+        );
       }
     } catch (error) {
       // Handle error
@@ -129,19 +134,22 @@ export function ContextProvider({ children }) {
     <AppDataContext.Provider
       value={{
         login,
-        authenticated,
+        isAuthenticated,
         getCategories,
-        categories,
+        categoriesData,
         sendFileToServer,
         allBlogData,
-        openBlog,
-        blog,
-        fetchBlogs,
+        fetchSingleBlogData,
+        singleBlog,
       }}
     >
       {children}
     </AppDataContext.Provider>
   );
 }
+
+ContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ContextProvider;
