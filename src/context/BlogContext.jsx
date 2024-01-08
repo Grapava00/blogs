@@ -14,23 +14,29 @@ export const BlogProvider = ({ children }) => {
   const storedAllBlogData =
     JSON.parse(localStorage.getItem("allBlogData")) || [];
   const [allBlogData, setAllBlogData] = useState(storedAllBlogData);
-  console.log(allBlogData);
 
   const getBlogById = async (id) => {
-    try {
-      const response = await axios.get(
-        `https://api.blog.redberryinternship.ge/api/blogs/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    const existingBlog = allBlogData.data.find((blog) => blog.id === id);
 
-      setSingleBlogData(response.data);
-      localStorage.setItem("singleBlogData", JSON.stringify(response.data));
-    } catch (error) {
-      console.error("Error fetching blog data:", error);
+    if (existingBlog) {
+      setSingleBlogData(existingBlog);
+      localStorage.setItem("singleBlogData", JSON.stringify(existingBlog));
+    } else {
+      try {
+        const response = await axios.get(
+          `https://api.blog.redberryinternship.ge/api/blogs/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setSingleBlogData(response.data);
+        localStorage.setItem("singleBlogData", JSON.stringify(response.data));
+      } catch (error) {
+        console.error("Error fetching blog data:", error);
+      }
     }
   };
 
