@@ -14,8 +14,9 @@ export const BlogProvider = ({ children }) => {
   const storedAllBlogData =
     JSON.parse(localStorage.getItem("allBlogData")) || [];
   const [allBlogData, setAllBlogData] = useState(storedAllBlogData);
+  console.log(allBlogData);
 
-  const fetchSingleBlogData = async (id) => {
+  const getBlogById = async (id) => {
     try {
       const response = await axios.get(
         `https://api.blog.redberryinternship.ge/api/blogs/${id}`,
@@ -71,7 +72,7 @@ export const BlogProvider = ({ children }) => {
 
   return (
     <BlogContext.Provider
-      value={{ uploadBlog, allBlogData, fetchSingleBlogData, singleBlog }}
+      value={{ uploadBlog, allBlogData, getBlogById, singleBlog }}
     >
       {children}
     </BlogContext.Provider>
