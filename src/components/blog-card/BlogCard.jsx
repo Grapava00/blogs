@@ -1,25 +1,33 @@
 import PropTypes from "prop-types";
 import CategoryTag from "../category-tag/CategoryTag";
-import { Link } from "react-router-dom";
+import NavLink from "../nav-link/NavLink";
 
-function BlogCard({ blog, passId, showFullBlogIcon }) {
+function BlogCard({
+  blog,
+  passId,
+  showFullBlogIcon,
+  isLinkVisible,
+  className,
+}) {
   return (
-    <article className='blog-card'>
-      <img src={blog.image} alt='Blog Cover' className='blog-cover' />
-      <div className='blog-content'>
+    <article>
+      <img src={blog.image} alt='Blog Cover' />
+      <div>
         <h3>{blog.author}</h3>
         <time dateTime={blog.publish_date}>{blog.publish_date}</time>
         <h2>{blog.title}</h2>
-        <ul className='category-list'>
+        <ul>
           {blog.categories.map((category) => (
             <CategoryTag key={category.title} category={category} />
           ))}
         </ul>
-        <p className='description'>{blog.description}</p>
-        <Link to='/blog' onClick={() => passId(blog.id)}>
-          სრულად ნახვა
-          <img src={showFullBlogIcon} alt='show full blog icon' />
-        </Link>
+        <p>{blog.description}</p>
+        {isLinkVisible && (
+          <NavLink to='/blog' onClick={() => passId(blog.id)}>
+            სრულად ნახვა
+            <img src={showFullBlogIcon} alt='show full blog icon' />
+          </NavLink>
+        )}
       </div>
     </article>
   );
@@ -41,8 +49,10 @@ BlogCard.propTypes = {
     ).isRequired,
     description: PropTypes.string.isRequired,
   }).isRequired,
-  passId: PropTypes.func.isRequired,
-  showFullBlogIcon: PropTypes.string.isRequired,
+  passId: PropTypes.func,
+  showFullBlogIcon: PropTypes.string,
+  isLinkVisible: PropTypes.bool.isRequired,
+  className: PropTypes.string,
 };
 
 export default BlogCard;

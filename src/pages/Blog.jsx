@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
-import arrow from "../assets/Arrow.svg";
-import arrowGray from "../assets/Arrow-gray.svg";
-import arrowBlue from "../assets/Arrow-blue.svg";
-import showFullBlogIcon from "../assets/show-full-blog.svg";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { UseAppData } from "../context/ContextProvider";
+import Header from "../components/header/Header";
+import arrow from "../assets/Arrow.svg";
+import showFullBlogIcon from "../assets/show-full-blog.svg";
+import { BlogContext } from "../context/BlogContext";
+import GoBack from "../components/go-back/GoBack";
+import BlogCard from "../components/blog-card/BlogCard";
 import "./blog.css";
 
 function Blog() {
@@ -14,24 +14,24 @@ function Blog() {
   const [goNextArrow, setGoNextArrow] = useState(true);
   const [goPrevArrow, setGoPrevArrow] = useState(false);
 
-  const { blog, fetchedData, openBlog } = UseAppData();
+  const { allBlogData, getBlogById, singleBlog } = useContext(BlogContext);
 
   const passId = async (id) => {
-    await openBlog(id);
+    await getBlogById(id);
   };
 
   useEffect(() => {
-    if (fetchedData) {
-      const filteredBlogs = fetchedData.data?.filter((data) => {
+    if (allBlogData) {
+      const filteredBlogs = allBlogData.data?.filter((data) => {
         return data.categories.some((category) =>
-          blog.categories.some(
+          singleBlog.categories.some(
             (blogCategory) => blogCategory.title === category.title
           )
         );
       });
       setFilteredData(filteredBlogs);
     }
-  }, [blog]);
+  }, [singleBlog, allBlogData, setFilteredData]);
 
   function goNext() {
     setCurrentIndex((oldIndex) => {
@@ -65,42 +65,9 @@ function Blog() {
 
   return (
     <>
-      <Header content={"შესვლა"} />
-      <Link to='/'>
-        <img src={arrow} alt='go back arrow' className='go-back-arrow' />
-      </Link>
-      <div className='blogs-container'>
-        <article className='blog-container-main'>
-          <img
-            src={blog.image}
-            alt='Blog Cover'
-            className='blog-cover blog-cover-large'
-          />
-          <div className='grid-container'>
-            <h3>{blog.author}</h3>
-            <time dateTime={blog.publish_date}>
-              {blog.publish_date} {`• ${blog.email}`}
-            </time>
-            <h2 className='h2-large'>{blog.title}</h2>
-            <ul className='flex-container'>
-              {blog.categories &&
-                blog.categories.map((category) => (
-                  <li
-                    className='category'
-                    style={{
-                      color: category.text_color,
-                      background: category.background_color,
-                    }}
-                    key={category.title}
-                  >
-                    {category.title}
-                  </li>
-                ))}
-            </ul>
-            <p className='content'>{blog.description}</p>
-          </div>
-        </article>
-      </div>
+      <Header />
+      <GoBack arrow={arrow} />
+      <BlogCard isLinkVisible={false} blog={singleBlog} />
       <div className='related-sarticles'>
         <div className='related-articles-top'>
           <p>მსგავსი სტატიები</p>
