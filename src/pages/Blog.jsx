@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Header from "../components/header/Header";
 import arrow from "../assets/Arrow.svg";
 import showFullBlogIcon from "../assets/show-full-blog.svg";
 import { BlogContext } from "../context/BlogContext";
 import GoBack from "../components/go-back/GoBack";
 import BlogCard from "../components/blog-card/BlogCard";
-import ArrowButton from "../components/arrow-button/ArrowButton";
+import RelatedArticles from "../components/related-articles/RelatedArticles";
 import "./blog.css";
 
 function Blog() {
@@ -69,34 +68,16 @@ function Blog() {
       <Header />
       <GoBack arrow={arrow} />
       <BlogCard isLinkVisible={false} blog={singleBlog} />
-      <div className='related-sarticles'>
-        <div className='related-articles-top'>
-          <p>მსგავსი სტატიები</p>
-          <div>
-            <ArrowButton
-              goNext={goNext}
-              goPrev={goPrev}
-              goNextArrow={goNextArrow}
-              goPrevArrow={goPrevArrow}
-            />
-          </div>
-        </div>
-        <div className='related-articles-list'>
-          {filteredData
-            .slice(currentIndex, currentIndex + 3)
-            .map((data, index) => {
-              return (
-                <BlogCard
-                  key={data.id || index}
-                  showFullBlogIcon={showFullBlogIcon}
-                  passId={passId}
-                  isLinkVisible={true}
-                  blog={data}
-                />
-              );
-            })}
-        </div>
-      </div>
+      <RelatedArticles
+        goNext={goNext}
+        goPrev={goPrev}
+        goNextArrow={goNextArrow}
+        goPrevArrow={goPrevArrow}
+        articles={filteredData}
+        passId={passId}
+        showFullBlogIcon={showFullBlogIcon}
+        currentIndex={currentIndex}
+      />
     </>
   );
 }
