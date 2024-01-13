@@ -1,35 +1,62 @@
 import PropTypes from "prop-types";
-import CategoryTag from "../category-tag/CategoryTag";
 import NavLink from "../nav-link/NavLink";
+import Category from "../category/Category";
+import { hexToRGBA } from "../../utils/colorUtils";
+import {
+  StyledArticle,
+  StyledBlogCoverImg,
+  StyledGroupDiv,
+  StyledBlogAuthor,
+  StyledBlogPublishDate,
+  StyledBlogTitle,
+  StyledBlogCategoryList,
+  StyledBlogDescription,
+} from "./blogCard.styles";
 
 function BlogCard({
   blog,
   passId,
   showFullBlogIcon,
   isLinkVisible,
+  showFullDescription,
+  size,
+  width,
   className,
 }) {
   return (
-    <article>
-      <img src={blog.image} alt='Blog Cover' />
-      <div>
-        <h3>{blog.author}</h3>
-        <time dateTime={blog.publish_date}>{blog.publish_date}</time>
-        <h2>{blog.title}</h2>
-        <ul>
+    <StyledArticle width={width}>
+      <StyledBlogCoverImg src={blog.image} alt='Blog Cover' />
+      <StyledGroupDiv>
+        <div>
+          <StyledBlogAuthor>{blog.author}</StyledBlogAuthor>
+          <StyledBlogPublishDate>{blog.publish_date}</StyledBlogPublishDate>
+        </div>
+        <StyledBlogTitle size={size}>{blog.title}</StyledBlogTitle>
+        <StyledBlogCategoryList>
           {blog.categories.map((category) => (
-            <CategoryTag key={category.title} category={category} />
+            <Category
+              key={category.title}
+              title={category.title}
+              textColor={category.background_color}
+              backgroundColor={hexToRGBA(category.background_color)}
+            />
           ))}
-        </ul>
-        <p>{blog.description}</p>
+        </StyledBlogCategoryList>
+        <StyledBlogDescription
+          title={
+            showFullDescription ? "Full description" : "Truncated description"
+          }
+        >
+          {blog.description}
+        </StyledBlogDescription>
         {isLinkVisible && (
           <NavLink to='/blog' onClick={() => passId(blog.id)}>
             სრულად ნახვა
             <img src={showFullBlogIcon} alt='show full blog icon' />
           </NavLink>
         )}
-      </div>
-    </article>
+      </StyledGroupDiv>
+    </StyledArticle>
   );
 }
 
@@ -53,6 +80,9 @@ BlogCard.propTypes = {
   showFullBlogIcon: PropTypes.string,
   isLinkVisible: PropTypes.bool.isRequired,
   className: PropTypes.string,
+  showFullDescription: PropTypes.bool,
+  size: PropTypes.string,
+  width: PropTypes.string,
 };
 
 export default BlogCard;
