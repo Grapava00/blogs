@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import Header from "../components/header/Header";
-import arrow from "../assets/Arrow.svg";
-import showFullBlogIcon from "../assets/show-full-blog.svg";
 import { BlogContext } from "../context/BlogContext";
+import Header from "../components/header/Header";
 import GoBack from "../components/go-back/GoBack";
 import BlogCard from "../components/blog-card/BlogCard";
 import RelatedArticles from "../components/related-articles/RelatedArticles";
-import "./blog.css";
+import arrow from "../assets/Arrow.svg";
+import showFullBlogIcon from "../assets/show-full-blog.svg";
 
 function Blog() {
   const [filteredData, setFilteredData] = useState([]) || "";
@@ -67,7 +66,15 @@ function Blog() {
     <>
       <Header />
       <GoBack arrow={arrow} />
-      <BlogCard isLinkVisible={false} blog={singleBlog} />
+      <div className='centered'>
+        <BlogCard
+          showFullDescription={true}
+          isLinkVisible={false}
+          blog={singleBlog}
+          size='32px'
+          width='720px'
+        />
+      </div>
       <RelatedArticles
         goNext={goNext}
         goPrev={goPrev}
