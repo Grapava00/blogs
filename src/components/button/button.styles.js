@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
+export const StyledButton = styled.button`
+  padding: ${(props) => props.padding || "10px 20px"};
   color: #fff;
   font-size: 14px;
   font-weight: 500;
@@ -10,6 +11,6 @@ export const Button = styled.button`
   cursor: pointer;
   &:disabled {
     background: #e4e3eb;
-    color: #e4e3eb;
+    color: #fff;
   }
 `;
