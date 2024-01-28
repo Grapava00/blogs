@@ -71,8 +71,8 @@ function Blog() {
           showFullDescription={true}
           isLinkVisible={false}
           blog={singleBlog}
-          size='32px'
-          width='720px'
+          fontSize='32px'
+          maxWidth='720px'
         />
       </div>
       <RelatedArticles

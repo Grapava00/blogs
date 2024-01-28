@@ -9,7 +9,6 @@ import Header from "../components/header/Header";
 import Cover from "../components/cover/Cover";
 import Categories from "../components/categories/Categories";
 import BlogList from "../components/blog-list/BlogList";
-import "./home.css";
 
 function Home() {
   const [filteredBlogsData, setFilteredBlogsData] = useState([]) || "";
@@ -43,7 +42,7 @@ function Home() {
   return (
     <>
       <Header />
-      <main className='container'>
+      <main className='blogs-container'>
         <Cover title='ბლოგი' image={BlogcoverImage} />
         <Categories
           categoriesData={categoriesData}

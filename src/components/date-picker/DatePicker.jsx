@@ -5,12 +5,12 @@ import "./DatePickerStyles.css";
 function DatePicker({ register }) {
   return (
     <>
-      <div className='date-picker__input-container'>
-        <label htmlFor='date' className='date-picker__input-title'>
+      <div className='input__container'>
+        <label htmlFor='date' className='input__title'>
           გამოქვეყნების თარიღი *
         </label>
         <input
-          className='date-picker__input'
+          className='input'
           type='date'
           id='date'
           {...register("publish_date", { required: true })}

@@ -25,21 +25,12 @@ function CreateSuccessModal() {
 
   return createPortal(
     showModal && (
-      <div className='create-success-modal__background'>
-        <div className='create-success-modal__content'>
-          <img
-            onClick={handleShowModal}
-            className='create-success-modal__close-icon'
-            src={closeIcon}
-            alt='close-icon'
-          />
+      <div>
+        <div>
+          <img onClick={handleShowModal} src={closeIcon} alt='close-icon' />
           <img src={successIcon} alt='Success Icon' />
-          <p className='create-success-modal__success-text'>
-            ჩანაწერი წარმატებით დაემატა
-          </p>
-          <Link to='/' className='create-success-modal__button'>
-            მთავარ გვერდზე დაბრუნება
-          </Link>
+          <p>ჩანაწერი წარმატებით დაემატა</p>
+          <Link to='/'>მთავარ გვერდზე დაბრუნება</Link>
         </div>
       </div>
     ),

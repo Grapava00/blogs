@@ -1,6 +1,12 @@
 import PropTypes from "prop-types";
 import ArrowButton from "../arrow-button/ArrowButton";
 import BlogCard from "../blog-card/BlogCard";
+import {
+  StyledRelatedArticlesList,
+  StyledRelatedArticlesContainer,
+  StyledRelatedArticlesTopBar,
+  StyledRelatedArticlesTitle,
+} from "./relatedArticles.styles";
 function RelatedArticles({
   goNext,
   goPrev,
@@ -12,9 +18,11 @@ function RelatedArticles({
   currentIndex,
 }) {
   return (
-    <div className='related-articles'>
-      <div className='related-articles-top'>
-        <p>მსგავსი სტატიები</p>
+    <StyledRelatedArticlesContainer>
+      <StyledRelatedArticlesTopBar>
+        <StyledRelatedArticlesTitle>
+          მსგავსი სტატიები
+        </StyledRelatedArticlesTitle>
         <div>
           <ArrowButton
             goNext={goNext}
@@ -23,8 +31,8 @@ function RelatedArticles({
             goPrevArrow={goPrevArrow}
           />
         </div>
-      </div>
-      <div className='related-articles-list'>
+      </StyledRelatedArticlesTopBar>
+      <StyledRelatedArticlesList>
         {articles
           .slice(currentIndex, currentIndex + 3)
           .map((article, index) => {
@@ -38,8 +46,8 @@ function RelatedArticles({
               />
             );
           })}
-      </div>
-    </div>
+      </StyledRelatedArticlesList>
+    </StyledRelatedArticlesContainer>
   );
 }
 

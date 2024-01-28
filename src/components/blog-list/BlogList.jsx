@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import BlogCard from "../blog-card/BlogCard";
+import { StyledBlogList } from "./blogList.styles";
 
 function BlogList({ blogsData, passId, showFullBlogIcon }) {
   return (
-    <div className='blog-list'>
+    <StyledBlogList>
       {Array.isArray(blogsData) &&
         blogsData.map((blog) => (
           <BlogCard
@@ -11,9 +12,10 @@ function BlogList({ blogsData, passId, showFullBlogIcon }) {
             blog={blog}
             passId={passId}
             showFullBlogIcon={showFullBlogIcon}
+            isLinkVisible={true}
           />
         ))}
-    </div>
+    </StyledBlogList>
   );
 }
 

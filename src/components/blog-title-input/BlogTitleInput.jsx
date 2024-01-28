@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import {
   titleSymbolsValidateForBorder,
@@ -13,14 +12,12 @@ function BlogTitleInput({ register, watch }) {
 
   return (
     <>
-      <div className='blog-title-input__container'>
-        <label htmlFor='title' className='blog-title-input__label'>
+      <div className='input__container'>
+        <label htmlFor='title' className='input__title'>
           სათაური *
         </label>
         <input
-          className={`blog-title-input__input ${titleSymbolsValidateForBorder(
-            titleValue
-          )}`}
+          className={`input ${titleSymbolsValidateForBorder(titleValue)}`}
           type='text'
           id='title'
           placeholder='შეიყვანეთ სათაური'
@@ -30,7 +27,7 @@ function BlogTitleInput({ register, watch }) {
           })}
         />
 
-        <p className='blog-title-input__warning'>
+        <p className='input-warnings'>
           <span className={titleSymbolsValidate(titleValue)}>
             მინიმუმ {MIN_TITLE_LENGTH} სიმბოლო
           </span>

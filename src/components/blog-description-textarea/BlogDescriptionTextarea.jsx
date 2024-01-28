@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import {
   textAreaSymbolsValidateForBorder,
@@ -15,15 +14,14 @@ function BlogDescriptionTextarea({ register, watch }) {
 
   return (
     <>
-      <div className='blog-description-textarea__input-container'>
-        <label
-          htmlFor='textarea'
-          className='blog-description-textarea__input-title'
-        >
+      <div className='textarea-container'>
+        <label htmlFor='textarea' className='input__title'>
           აღწერა *
         </label>
         <textarea
-          className={textAreaSymbolsValidateForBorder(textAreaValue)}
+          className={`input  ${textAreaSymbolsValidateForBorder(
+            textAreaValue
+          )}`}
           type='textarea'
           id='textarea'
           placeholder='შეიყვნეთ აღწერა'
@@ -34,8 +32,8 @@ function BlogDescriptionTextarea({ register, watch }) {
             minLength: MIN_LENGTH,
           })}
         ></textarea>
-        {/* validation warning */}
-        <p className='blog-description-textarea__inputs-warning'>
+
+        <p className='input-warnings'>
           <span className={textAreaSymbolsValidate(textAreaValue)}>
             მინიმუმ {MIN_LENGTH} სიმბოლო
           </span>

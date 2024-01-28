@@ -3,14 +3,14 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import ContextProvider from "./context/ContextProvider";
+import { CommonProvider } from "./context/CommonContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ContextProvider>
+    <CommonProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ContextProvider>
+    </CommonProvider>
   </React.StrictMode>
 );

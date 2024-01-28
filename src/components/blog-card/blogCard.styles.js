@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const StyledArticle = styled.article`
   max-width: ${(props) => props.width || "408px"};
   width: 100%;
+  margin-top: 40px;
 `;
 
 export const StyledBlogCoverImg = styled.img`
@@ -56,4 +57,6 @@ export const StyledBlogDescription = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 16px;
+  font-weight: 400;
+  color: #404049;
 `;

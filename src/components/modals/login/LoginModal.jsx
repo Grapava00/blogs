@@ -29,12 +29,11 @@ function LoginModal({ handleShowModal, showModal }) {
     <>
       {showModal &&
         createPortal(
-          <div className='modal'>
-            <div className='modal__content'>
+          <div>
+            <div>
               <img
                 onClick={() => handleShowModal(false)}
                 src={close}
-                className='modal__close-button'
                 alt='Close Button'
               />
 

@@ -19,19 +19,18 @@ function BlogCard({
   showFullBlogIcon,
   isLinkVisible,
   showFullDescription,
-  size,
-  width,
-  className,
+  fontSize,
+  maxWidth,
 }) {
   return (
-    <StyledArticle width={width}>
+    <StyledArticle width={maxWidth}>
       <StyledBlogCoverImg src={blog.image} alt='Blog Cover' />
       <StyledGroupDiv>
         <div>
           <StyledBlogAuthor>{blog.author}</StyledBlogAuthor>
           <StyledBlogPublishDate>{blog.publish_date}</StyledBlogPublishDate>
         </div>
-        <StyledBlogTitle size={size}>{blog.title}</StyledBlogTitle>
+        <StyledBlogTitle size={fontSize}>{blog.title}</StyledBlogTitle>
         <StyledBlogCategoryList>
           {blog.categories.map((category) => (
             <Category
@@ -81,8 +80,8 @@ BlogCard.propTypes = {
   isLinkVisible: PropTypes.bool.isRequired,
   className: PropTypes.string,
   showFullDescription: PropTypes.bool,
-  size: PropTypes.string,
-  width: PropTypes.string,
+  fontSize: PropTypes.string,
+  maxWidth: PropTypes.string,
 };
 
 export default BlogCard;

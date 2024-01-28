@@ -7,10 +7,11 @@ import {
   wordsValidate,
   patternValidate,
 } from "../../utils/validations";
-import "./NameInputStyles.css";
+
+const MIN_TITLE_LENGTH = 4;
 
 const validationMessages = {
-  authorMinimumSymbols: "მინიმუმ 4 სიმბოლო",
+  authorMinimumSymbols: `მინიმუმ ${MIN_TITLE_LENGTH} სიმბოლო`,
   minimumWords: "მინიმუმ ორი სიტყვა",
   georgianSymbols: "მხოლოდ ქართული სიმბოლოები",
 };
@@ -20,24 +21,24 @@ function NameInput({ register, watch }) {
 
   return (
     <>
-      <div className='name-input__container'>
-        <label htmlFor='author' className='name-input__title'>
+      <div className='input__container'>
+        <label htmlFor='author' className='input__title'>
           ავტორი *
         </label>
         <input
-          className={`name-input__input ${wordsValidateForBorder(authorValue)}`}
+          className={`input ${wordsValidateForBorder(authorValue)}`}
           type='text'
           id='author'
           placeholder='შეიყვანეთ სახელი'
           {...register("author", {
             required: true,
-            minLength: 4,
+            minLength: MIN_TITLE_LENGTH,
             pattern: /^[ა-ჰ ]+$/,
             validate: customWordCountValidation,
           })}
         />
 
-        <ul className='name-input__warnings name-input__input-warning'>
+        <ul className='author-ul input-warnings'>
           <li className={authorSymbolsValidate(authorValue)}>
             {validationMessages.authorMinimumSymbols}
           </li>

@@ -1,40 +1,36 @@
 import PropTypes from "prop-types";
 import fileIcon from "../../assets/file-icon.svg";
+import {
+  StyledUploadImageLabel,
+  StyledUploadImageInput,
+} from "./uploadImage.styles";
 
 function UploadImage({
-  isDragOver,
   handleDragOver,
   handleDragLeave,
   handleDrop,
   handleImageSelect,
 }) {
   return (
-    <>
-      <h3 className='image-input__heading'>ატვირთეთ ფოტო</h3>
-      <label
-        className={`image-input__file-upload ${
-          isDragOver ? "image-input__file-upload--drag-over" : ""
-        }`}
+    <div>
+      <h3 className='input__title'>ატვირთეთ ფოტო</h3>
+      <StyledUploadImageLabel
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
         <img src={fileIcon} alt='File Icon' />
-        <p className='image-input__file-upload-text'>
-          ჩააგდეთ ფაილი აქ ან{" "}
-          <span className='image-input__file-upload-text--underline'>
-            აირჩიეთ ფაილი
-          </span>
+        <p>
+          ჩააგდეთ ფაილი აქ ან <span>აირჩიეთ ფაილი</span>
         </p>
-        <input
-          style={{ display: "none" }}
+        <StyledUploadImageInput
           name='image'
           type='file'
           onChange={handleImageSelect}
           required
         />
-      </label>
-    </>
+      </StyledUploadImageLabel>
+    </div>
   );
 }
 

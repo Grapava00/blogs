@@ -1,19 +1,23 @@
-import React from "react";
+import { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Blog from "./pages/Blog";
-import Create from "./pages/Create";
-import FileInput from "./pages/File";
+import CreateForm from "./pages/CreateForm";
+import { AuthContext } from "./context/AuthContext";
+import "./App.css";
 
-import { UseAppData } from "./context/ContextProvider";
 const App = () => {
-  const { authenticated } = UseAppData();
+  const { isAuthenticated } = useContext(AuthContext);
+
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      {authenticated ? <Route path='/create-blog' element={<Create />} /> : ""}
+      {isAuthenticated ? (
+        <Route path='/create-blog' element={<CreateForm />} />
+      ) : (
+        ""
+      )}
       <Route path='/blog' element={<Blog />} />
-      <Route path='/file' element={<FileInput />} />
     </Routes>
   );
 };

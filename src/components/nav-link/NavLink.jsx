@@ -1,17 +1,17 @@
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { StyledLink } from "./navLink.styles";
 
 function NavLink({ to, children, ...props }) {
   return (
-    <Link to={to} {...props}>
+    <StyledLink to={to} {...props}>
       {children}
-    </Link>
+    </StyledLink>
   );
 }
 
 NavLink.propTypes = {
   to: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default NavLink;

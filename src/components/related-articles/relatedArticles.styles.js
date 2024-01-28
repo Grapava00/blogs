@@ -14,6 +14,7 @@ export const StyledRelatedArticlesTopBar = styled.div`
     align-items: center;
   }
 `;
+
 export const StyledRelatedArticlesTitle = styled.h3`
   color: #1a1a1f;
   font-size: 32px;

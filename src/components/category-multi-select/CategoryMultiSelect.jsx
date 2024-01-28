@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { UseAppData } from "../../context/ContextProvider";
+import { CategoryContext } from "../../context/CategoryContext";
 
 const CategoryMultiSelect = ({
   handleCategoriesId,
   handlecategoryExistence,
 }) => {
-  const { categories } = UseAppData();
+  const { categoriesData } = useContext(CategoryContext);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const options = categories.map((category) => ({
-    value: category.id,
-    label: category.title,
-  }));
+  const options =
+    categoriesData?.map((category) => ({
+      value: category.id,
+      label: category.title,
+    })) ?? [];
 
   const handleCategoryChange = (selectedOptions) => {
     const selectedIds = selectedOptions.map((option) => option.value);
@@ -29,16 +30,19 @@ const CategoryMultiSelect = ({
 
   return (
     <>
-      <Select
-        defaultValue=''
-        isMulti
-        name='categories'
-        options={options}
-        className='basic-multi-select'
-        classNamePrefix='select'
-        onChange={handleCategoryChange}
-        value={selectedCategories}
-      />
+      <div className='input-container'>
+        <h3 className='input__title'>კატეგორია *</h3>
+        <Select
+          defaultValue=''
+          isMulti
+          name='categories'
+          options={options}
+          className='input '
+          classNamePrefix='select'
+          onChange={handleCategoryChange}
+          value={selectedCategories}
+        />
+      </div>
     </>
   );
 };

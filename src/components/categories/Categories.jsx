@@ -1,20 +1,21 @@
 import PropTypes from "prop-types";
 import Category from "../category/Category";
-import "./categories.styles";
+import { hexToRGBA } from "../../utils/colorUtils";
+import { CategoriesList } from "./categories.styles";
 function Categories({ categoriesData, handleCategoryClick }) {
   return (
-    <ul className='categories'>
+    <CategoriesList>
       {Array.isArray(categoriesData) &&
         categoriesData.map((category) => (
           <Category
             key={category.title}
             title={category.title}
-            textColor={category.text_color}
-            backgroundColor={category.background_color}
+            textColor={category.background_color}
+            backgroundColor={hexToRGBA(category.background_color)}
             handleCategoryClick={() => handleCategoryClick(category.title)}
           />
         ))}
-    </ul>
+    </CategoriesList>
   );
 }
 

@@ -29,7 +29,7 @@ ul {
 .form-container {
   display: flex;
   justify-content: center;
-  margin-top: 33px;
+  padding-top: 33px;
   height: 100vh;
   background-color: #fbfaff;
 }

@@ -10,6 +10,7 @@ import ImageInput from "../components/image-input/ImageInput";
 import NameInput from "../components/name-input/NameInput";
 import CreateSuccessModal from "../components/modals/create-success/CreateSuccessModal";
 import Button from "../components/button/Button";
+import Header from "../components/header/Header";
 
 function CreateForm() {
   const {
@@ -79,33 +80,36 @@ function CreateForm() {
   };
 
   return (
-    <div className='form-container'>
-      <form className='form-content' onSubmit={handleSubmit(onSubmit)}>
-        <div className='inputs-wrapper'>
-          <ImageInput
-            handleImageData={handleImageData}
-            handleImageExistence={handleImageExistence}
-          />
-          <div className='wrapper'>
-            <NameInput register={register} watch={watch} />
-            <BlogTitleInput register={register} watch={watch} />
-          </div>
-          <BlogDescriptionTextarea register={register} watch={watch} />
-          <div className='wrapper'>
-            <DatePicker register={register} />
-            <CategoryMultiSelect
-              register={register}
-              handleCategoriesId={handleCategoriesId}
-              handlecategoryExistence={handlecategoryExistence}
+    <>
+      <Header display='none' />
+      <div className='form-container'>
+        <form className='form-content' onSubmit={handleSubmit(onSubmit)}>
+          <div className='inputs-wrapper'>
+            <ImageInput
+              handleImageData={handleImageData}
+              handleImageExistence={handleImageExistence}
             />
-          </div>
-          <EmailInput register={register} errors={errors} />
+            <div className='wrapper'>
+              <NameInput register={register} watch={watch} />
+              <BlogTitleInput register={register} watch={watch} />
+            </div>
+            <BlogDescriptionTextarea register={register} watch={watch} />
+            <div className='wrapper'>
+              <DatePicker register={register} />
+              <CategoryMultiSelect
+                register={register}
+                handleCategoriesId={handleCategoriesId}
+                handlecategoryExistence={handlecategoryExistence}
+              />
+            </div>
+            <EmailInput register={register} errors={errors} />
 
-          {renderSubmitButton()}
-        </div>
-        {isSubmitSuccessful && <CreateSuccessModal />}
-      </form>
-    </div>
+            {renderSubmitButton()}
+          </div>
+          {isSubmitSuccessful && <CreateSuccessModal />}
+        </form>
+      </div>
+    </>
   );
 }
 

@@ -1,25 +1,24 @@
 import PropTypes from "prop-types";
 import galleryIcon from "../../assets/gallery.png";
 import closeIcon from "../../assets/close.svg";
+import {
+  StyledPreviewImageContainer,
+  StyledPreviewImageItems,
+} from "./previewImage.styles";
 
 function PreviewPhoto({ selectedImage, handleRemoveImage }) {
   return (
-    <div className='image-input__preview-container'>
-      <div className='image-input__preview-container--flex'>
-        <img
-          className='image-input__gallery-icon'
-          src={galleryIcon}
-          alt={selectedImage?.name}
-          style={{ width: "24px", height: "24px" }}
-        />
-        <p className='image-input__selected-file'>{selectedImage?.name}</p>
-      </div>
+    <StyledPreviewImageContainer>
+      <StyledPreviewImageItems>
+        <img src={galleryIcon} alt={selectedImage?.name} />
+        <p>{selectedImage?.name}</p>
+      </StyledPreviewImageItems>
       <img
-        style={{ cursor: "pointer" }}
+        className='cursor-pointer'
         src={closeIcon}
         onClick={handleRemoveImage}
       />
-    </div>
+    </StyledPreviewImageContainer>
   );
 }
 
